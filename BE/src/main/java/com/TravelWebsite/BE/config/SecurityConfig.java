@@ -1,15 +1,15 @@
 package com.TravelWebsite.BE.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
-
-import java.util.List;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -18,14 +18,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors().and()
-            .csrf().disable()
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Sử dụng phương thức mới cho CORS
+            .csrf(csrf -> csrf.disable()) // Vô hiệu hóa CSRF nếu không cần thiết
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // ⚡️ Tạm thời cho phép tất cả request không cần login
+                .anyRequest().permitAll() // Cho phép tất cả các yêu cầu mà không cần đăng nhập
             );
         return http.build();
     }
-    
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

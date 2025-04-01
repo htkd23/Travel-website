@@ -32,12 +32,11 @@ public class Tour {
     private String description;
     private String location;
     private BigDecimal price;
-
     private LocalDate startDate;
     private LocalDate endDate;
     private String imagePath;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // ⚠️ Quan trọng: Map với ENUM trong MySQL
     @Column(nullable = false)
     private TourType tourType;
 
